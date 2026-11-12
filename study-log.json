@@ -695,6 +695,15 @@
           "startTime": "10:37",
           "endTime": "11:03",
           "memo": ""
+        },
+        {
+          "id": 1794475991880,
+          "subject": "応用情報",
+          "seconds": 3061,
+          "startTime": "17:23",
+          "endTime": "18:33",
+          "memo": "",
+          "pausedSeconds": 688
         }
       ]
     },
@@ -826,5 +835,5 @@
       ]
     }
   },
-  "exportedAt": "2026-11-12T08:46:04.965Z"
+  "exportedAt": "2026-11-12T09:37:01.307Z"
 }
