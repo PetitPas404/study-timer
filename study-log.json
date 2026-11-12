@@ -3,10 +3,49 @@
     "数学",
     "英語",
     "国語",
-    "CS",
-    "資格勉強"
+    "CS50x",
+    "FP"
   ],
   "logs": {
+    "log-2026-11-09": {
+      "date": "2026-11-09",
+      "entries": [
+        {
+          "id": 1794214175618,
+          "subject": "FP",
+          "seconds": 1721,
+          "startTime": "17:20",
+          "endTime": "17:49",
+          "memo": "",
+          "pausedSeconds": 35
+        },
+        {
+          "id": 1794215081638,
+          "subject": "国語",
+          "seconds": 613,
+          "startTime": "17:54",
+          "endTime": "18:04",
+          "memo": ""
+        },
+        {
+          "id": 1794229435250,
+          "subject": "CS50x",
+          "seconds": 1390,
+          "startTime": "22:00",
+          "endTime": "22:03",
+          "memo": ""
+        },
+        {
+          "id": 1794232772874,
+          "subject": "英語",
+          "seconds": 2171,
+          "startTime": "22:12",
+          "endTime": "22:59",
+          "memo": "",
+          "pausedSeconds": 669
+        }
+      ]
+    },
     "log-2026-10-15": {
       "date": "2026-10-15",
       "entries": [
@@ -42,7 +81,7 @@
         },
         {
           "id": 1792852211219,
-          "subject": "CS",
+          "subject": "CS50x",
           "seconds": 7200,
           "startTime": "21:30",
           "endTime": "23:30",
@@ -304,7 +343,7 @@
       "entries": [
         {
           "id": 1792986802661,
-          "subject": "CS",
+          "subject": "CS50x",
           "seconds": 3600,
           "startTime": "11:53",
           "endTime": "12:53",
@@ -399,35 +438,6 @@
         }
       ]
     },
-    "log-2026-09-23": {
-      "date": "2026-09-23",
-      "entries": [
-        {
-          "id": 1791975574456,
-          "subject": "化学",
-          "seconds": 2478,
-          "startTime": "12:31",
-          "endTime": "13:12",
-          "memo": ""
-        },
-        {
-          "id": 1791975573456,
-          "subject": "国語",
-          "seconds": 2206,
-          "startTime": "17:52",
-          "endTime": "18:28",
-          "memo": ""
-        },
-        {
-          "id": 1791975572456,
-          "subject": "英語",
-          "seconds": 2793,
-          "startTime": "15:44",
-          "endTime": "16:30",
-          "memo": ""
-        }
-      ]
-    },
     "log-2026-09-24": {
       "date": "2026-09-24",
       "entries": [
@@ -483,7 +493,7 @@
         },
         {
           "id": 1792763730113,
-          "subject": "CS",
+          "subject": "CS50x",
           "seconds": 5100,
           "startTime": "21:30",
           "endTime": "22:55",
@@ -496,7 +506,7 @@
       "entries": [
         {
           "id": 1792908906962,
-          "subject": "CS",
+          "subject": "CS50x",
           "seconds": 3600,
           "startTime": "10:00",
           "endTime": "11:00",
@@ -511,6 +521,35 @@
           "endTime": "23:25",
           "memo": "",
           "pausedSeconds": 423
+        }
+      ]
+    },
+    "log-2026-09-23": {
+      "date": "2026-09-23",
+      "entries": [
+        {
+          "id": 1791975574456,
+          "subject": "化学",
+          "seconds": 2478,
+          "startTime": "12:31",
+          "endTime": "13:12",
+          "memo": ""
+        },
+        {
+          "id": 1791975573456,
+          "subject": "国語",
+          "seconds": 2206,
+          "startTime": "17:52",
+          "endTime": "18:28",
+          "memo": ""
+        },
+        {
+          "id": 1791975572456,
+          "subject": "英語",
+          "seconds": 2793,
+          "startTime": "15:44",
+          "endTime": "16:30",
+          "memo": ""
         }
       ]
     },
@@ -543,12 +582,25 @@
         }
       ]
     },
+    "log-2026-10-01": {
+      "date": "2026-10-01",
+      "entries": [
+        {
+          "id": 1791976374456,
+          "subject": "化学",
+          "seconds": 3866,
+          "startTime": "18:03",
+          "endTime": "19:07",
+          "memo": ""
+        }
+      ]
+    },
     "log-2026-11-10": {
       "date": "2026-11-10",
       "entries": [
         {
           "id": 1794300809754,
-          "subject": "CS",
+          "subject": "CS50x",
           "seconds": 3480,
           "startTime": "16:41",
           "endTime": "17:53",
@@ -570,19 +622,6 @@
           "seconds": 1619,
           "startTime": "22:06",
           "endTime": "22:33",
-          "memo": ""
-        }
-      ]
-    },
-    "log-2026-10-01": {
-      "date": "2026-10-01",
-      "entries": [
-        {
-          "id": 1791976374456,
-          "subject": "化学",
-          "seconds": 3866,
-          "startTime": "18:03",
-          "endTime": "19:07",
           "memo": ""
         }
       ]
@@ -722,19 +761,6 @@
         }
       ]
     },
-    "log-2026-10-22": {
-      "date": "2026-10-22",
-      "entries": [
-        {
-          "id": 1792669621600,
-          "subject": "英語",
-          "seconds": 1807,
-          "startTime": "20:46",
-          "endTime": "20:47",
-          "memo": ""
-        }
-      ]
-    },
     "log-2026-10-10": {
       "date": "2026-10-10",
       "entries": [
@@ -764,42 +790,16 @@
         }
       ]
     },
-    "log-2026-11-09": {
-      "date": "2026-11-09",
+    "log-2026-10-22": {
+      "date": "2026-10-22",
       "entries": [
         {
-          "id": 1794214175618,
-          "subject": "資格勉強",
-          "seconds": 1721,
-          "startTime": "17:20",
-          "endTime": "17:49",
-          "memo": "",
-          "pausedSeconds": 35
-        },
-        {
-          "id": 1794215081638,
-          "subject": "国語",
-          "seconds": 613,
-          "startTime": "17:54",
-          "endTime": "18:04",
-          "memo": ""
-        },
-        {
-          "id": 1794229435250,
-          "subject": "CS",
-          "seconds": 1390,
-          "startTime": "22:00",
-          "endTime": "22:03",
-          "memo": ""
-        },
-        {
-          "id": 1794232772874,
+          "id": 1792669621600,
           "subject": "英語",
-          "seconds": 2171,
-          "startTime": "22:12",
-          "endTime": "22:59",
-          "memo": "",
-          "pausedSeconds": 669
+          "seconds": 1807,
+          "startTime": "20:46",
+          "endTime": "20:47",
+          "memo": ""
         }
       ]
     },
@@ -816,7 +816,7 @@
         },
         {
           "id": 1794405633219,
-          "subject": "資格勉強",
+          "subject": "FP",
           "seconds": 1533,
           "startTime": "22:10",
           "endTime": "23:00",
@@ -825,5 +825,5 @@
       ]
     }
   },
-  "exportedAt": "2026-11-12T07:49:21.097Z"
+  "exportedAt": "2026-11-12T08:23:33.255Z"
 }
