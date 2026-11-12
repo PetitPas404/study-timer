@@ -178,6 +178,14 @@
         <button class="btn" id="btn-clear-demo">デモを消す</button>
         <button class="btn" id="btn-insert-demo">デモを入れる</button>
       </div>
+      <hr>
+      <h3>GitHub自動同期</h3>
+      <p style="font-size:13px;color:#666">勉強記録をGitHubに自動保存します。トークンはこの端末にのみ保存されます。</p>
+      <input type="password" id="gh-token" placeholder="GitHubトークン（fine-grained）" autocomplete="off" style="width:100%;box-sizing:border-box;padding:8px;margin:4px 0">
+      <div class="data-actions" style="margin-top:8px">
+        <button class="btn" id="btn-gh-save-token">トークンを保存</button>
+      </div>
+      <p id="gh-sync-status" style="font-size:12px;color:#888;margin-top:8px">未設定</p>
     </div>
   </div>
 

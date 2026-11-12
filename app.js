@@ -62,6 +62,156 @@ var Store = {
   }
 };
 
+// === GitHub Auto Sync ===
+// 勉強記録（subjects と log-*）を GitHub リポジトリ内の study-log.json へ自動保存する。
+// トークンはこの端末の localStorage にのみ保存される（ghSyncToken）。
+
+var GitHubSync = {
+  API: 'https://api.github.com/repos/PetitPas404/study-timer/contents/study-log.json',
+  BRANCH: 'master',
+  _timer: null,
+  _syncing: false,
+
+  token: function() {
+    return Store.get('ghSyncToken') || '';
+  },
+
+  enabled: function() {
+    return !!this.token();
+  },
+
+  isDirty: function() {
+    return !!Store.get('ghSyncDirty');
+  },
+
+  markDirty: function() {
+    Store.set('ghSyncDirty', true);
+    this.updateStatus();
+    this.schedule();
+  },
+
+  schedule: function() {
+    if (!this.enabled() || this._syncing) return;
+    var self = this;
+    if (this._timer) clearTimeout(this._timer);
+    this._timer = setTimeout(function() { self.syncNow(); }, 5000);
+  },
+
+  collect: function() {
+    var data = {
+      subjects: Store.get('subjects') || [],
+      logs: {},
+      exportedAt: new Date().toISOString()
+    };
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      if (key && key.indexOf('log-') === 0) {
+        data.logs[key] = Store.get(key);
+      }
+    }
+    return data;
+  },
+
+  encode: function(text) {
+    var bytes = new TextEncoder().encode(text);
+    var bin = '';
+    for (var i = 0; i < bytes.length; i++) {
+      bin += String.fromCharCode(bytes[i]);
+    }
+    return btoa(bin);
+  },
+
+  headers: function() {
+    return {
+      'Authorization': 'Bearer ' + this.token(),
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    };
+  },
+
+  syncNow: function() {
+    if (!this.enabled() || this._syncing) return;
+    var self = this;
+    this._syncing = true;
+    this.updateStatus();
+
+    fetch(this.API + '?ref=' + this.BRANCH, { headers: this.headers() })
+      .then(function(res) {
+        if (res.status === 404) return null;
+        if (!res.ok) throw new Error('GET ' + res.status);
+        return res.json();
+      })
+      .then(function(file) {
+        var body = {
+          message: 'chore: auto-sync study log',
+          content: self.encode(JSON.stringify(self.collect(), null, 2)),
+          branch: self.BRANCH
+        };
+        if (file && file.sha) body.sha = file.sha;
+        return fetch(self.API, {
+          method: 'PUT',
+          headers: self.headers(),
+          body: JSON.stringify(body),
+          keepalive: true
+        });
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('PUT ' + res.status);
+        return res.json();
+      })
+      .then(function() {
+        Store.set('ghSyncDirty', false);
+        Store.remove('ghSyncError');
+        Store.set('ghLastSync', new Date().toISOString());
+        self._syncing = false;
+        self.updateStatus();
+      })
+      .catch(function() {
+        self._syncing = false;
+        Store.set('ghSyncError', true);
+        self.updateStatus();
+      });
+  },
+
+  updateStatus: function() {
+    var el = document.getElementById('gh-sync-status');
+    if (!el) return;
+    if (!this.enabled()) {
+      el.textContent = '未設定：トークンを保存すると自動同期が始まります';
+      return;
+    }
+    if (this._syncing) {
+      el.textContent = '同期中…';
+      return;
+    }
+    if (Store.get('ghSyncError') && this.isDirty()) {
+      el.textContent = '同期に失敗しました（次に記録したとき自動で再試行します）';
+      return;
+    }
+    var last = Store.get('ghLastSync');
+    el.textContent = last
+      ? '最終同期：' + new Date(last).toLocaleString('ja-JP')
+      : 'トークン保存済み（まだ同期していません）';
+  }
+};
+
+// 記録データが変わったら自動同期を予約する
+(function() {
+  var origSet = Store.set;
+  var origRemove = Store.remove;
+  function isDataKey(key) {
+    return key === 'subjects' || (key && key.indexOf('log-') === 0);
+  }
+  Store.set = function(key, value) {
+    origSet(key, value);
+    if (isDataKey(key)) GitHubSync.markDirty();
+  };
+  Store.remove = function(key) {
+    origRemove(key);
+    if (isDataKey(key)) GitHubSync.markDirty();
+  };
+})();
+
 // === Time formatting ===
 function formatTime(seconds) {
   var h = Math.floor(seconds / 3600);
@@ -207,6 +357,9 @@ StudyTimer.prototype.bindEvents = function() {
   document.getElementById('btn-settings').addEventListener('click', function() {
     self.renderSubjectList();
     self.openModal('modal-settings');
+    var ghTokenInput2 = document.getElementById('gh-token');
+    if (ghTokenInput2) ghTokenInput2.value = GitHubSync.token();
+    GitHubSync.updateStatus();
   });
 
   document.getElementById('btn-close-settings').addEventListener('click', function() {
@@ -249,6 +402,29 @@ StudyTimer.prototype.bindEvents = function() {
 
   document.getElementById('file-import').addEventListener('change', function(e) {
     self.importData(e);
+  });
+
+  // GitHub auto sync
+  var ghTokenInput = document.getElementById('gh-token');
+  if (ghTokenInput) ghTokenInput.value = GitHubSync.token();
+  document.getElementById('btn-gh-save-token').addEventListener('click', function() {
+    var t = document.getElementById('gh-token').value.trim();
+    if (t) {
+      Store.set('ghSyncToken', t);
+      GitHubSync.markDirty();
+      alert('トークンを保存しました。自動同期を開始します。');
+    } else {
+      Store.remove('ghSyncToken');
+      alert('トークンを消去しました。自動同期は停止します。');
+    }
+    GitHubSync.updateStatus();
+  });
+  GitHubSync.updateStatus();
+  if (GitHubSync.enabled() && GitHubSync.isDirty()) GitHubSync.schedule();
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden' && GitHubSync.enabled() && GitHubSync.isDirty()) {
+      GitHubSync.syncNow();
+    }
   });
 
   // Calendar navigation
