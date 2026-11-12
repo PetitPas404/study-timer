@@ -352,6 +352,37 @@
         }
       ]
     },
+    "log-2026-11-12": {
+      "date": "2026-11-12",
+      "entries": [
+        {
+          "id": 1794449029022,
+          "subject": "数学",
+          "seconds": 1141,
+          "startTime": "10:37",
+          "endTime": "11:03",
+          "memo": ""
+        },
+        {
+          "id": 1794475991880,
+          "subject": "応用情報",
+          "seconds": 3061,
+          "startTime": "17:23",
+          "endTime": "18:33",
+          "memo": "",
+          "pausedSeconds": 688
+        },
+        {
+          "id": 1794491470323,
+          "subject": "英語",
+          "seconds": 1226,
+          "startTime": "22:24",
+          "endTime": "22:51",
+          "memo": "",
+          "pausedSeconds": 298
+        }
+      ]
+    },
     "log-2026-10-13": {
       "date": "2026-10-13",
       "entries": [
@@ -685,28 +716,6 @@
         }
       ]
     },
-    "log-2026-11-12": {
-      "date": "2026-11-12",
-      "entries": [
-        {
-          "id": 1794449029022,
-          "subject": "数学",
-          "seconds": 1141,
-          "startTime": "10:37",
-          "endTime": "11:03",
-          "memo": ""
-        },
-        {
-          "id": 1794475991880,
-          "subject": "応用情報",
-          "seconds": 3061,
-          "startTime": "17:23",
-          "endTime": "18:33",
-          "memo": "",
-          "pausedSeconds": 688
-        }
-      ]
-    },
     "log-2026-10-06": {
       "date": "2026-10-06",
       "entries": [
@@ -771,6 +780,27 @@
         }
       ]
     },
+    "log-2026-11-11": {
+      "date": "2026-11-11",
+      "entries": [
+        {
+          "id": 1794402015097,
+          "subject": "英語",
+          "seconds": 1176,
+          "startTime": "21:40",
+          "endTime": "22:00",
+          "memo": ""
+        },
+        {
+          "id": 1794405633219,
+          "subject": "FP",
+          "seconds": 1533,
+          "startTime": "22:10",
+          "endTime": "23:00",
+          "memo": ""
+        }
+      ]
+    },
     "log-2026-10-10": {
       "date": "2026-10-10",
       "entries": [
@@ -812,28 +842,7 @@
           "memo": ""
         }
       ]
-    },
-    "log-2026-11-11": {
-      "date": "2026-11-11",
-      "entries": [
-        {
-          "id": 1794402015097,
-          "subject": "英語",
-          "seconds": 1176,
-          "startTime": "21:40",
-          "endTime": "22:00",
-          "memo": ""
-        },
-        {
-          "id": 1794405633219,
-          "subject": "FP",
-          "seconds": 1533,
-          "startTime": "22:10",
-          "endTime": "23:00",
-          "memo": ""
-        }
-      ]
     }
   },
-  "exportedAt": "2026-11-12T09:37:01.307Z"
+  "exportedAt": "2026-11-12T14:10:23.571Z"
 }
