@@ -1,0 +1,829 @@
+{
+  "subjects": [
+    "数学",
+    "英語",
+    "国語",
+    "CS",
+    "資格勉強"
+  ],
+  "logs": {
+    "log-2026-10-15": {
+      "date": "2026-10-15",
+      "entries": [
+        {
+          "id": 1792026003339,
+          "subject": "国語",
+          "seconds": 2352,
+          "startTime": "09:10",
+          "endTime": "10:00",
+          "memo": "",
+          "pausedSeconds": 619
+        }
+      ]
+    },
+    "log-2026-10-24": {
+      "date": "2026-10-24",
+      "entries": [
+        {
+          "id": 1792834254140,
+          "subject": "英語",
+          "seconds": 263,
+          "startTime": "18:26",
+          "endTime": "18:30",
+          "memo": ""
+        },
+        {
+          "id": 1792843354290,
+          "subject": "英語",
+          "seconds": 1741,
+          "startTime": "20:33",
+          "endTime": "21:02",
+          "memo": ""
+        },
+        {
+          "id": 1792852211219,
+          "subject": "CS",
+          "seconds": 7200,
+          "startTime": "21:30",
+          "endTime": "23:30",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-02": {
+      "date": "2026-10-02",
+      "entries": [
+        {
+          "id": 1791976474456,
+          "subject": "国語",
+          "seconds": 3382,
+          "startTime": "19:30",
+          "endTime": "20:26",
+          "memo": ""
+        },
+        {
+          "id": 1791976473456,
+          "subject": "国語",
+          "seconds": 1514,
+          "startTime": "20:32",
+          "endTime": "20:57",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-03": {
+      "date": "2026-10-03",
+      "entries": [
+        {
+          "id": 1791976574456,
+          "subject": "英語",
+          "seconds": 4544,
+          "startTime": "11:44",
+          "endTime": "12:59",
+          "memo": ""
+        },
+        {
+          "id": 1791976573456,
+          "subject": "国語",
+          "seconds": 6390,
+          "startTime": "09:28",
+          "endTime": "11:14",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-04": {
+      "date": "2026-10-04",
+      "entries": [
+        {
+          "id": 1791976674456,
+          "subject": "国語",
+          "seconds": 2688,
+          "startTime": "13:34",
+          "endTime": "14:18",
+          "memo": ""
+        },
+        {
+          "id": 1791976673456,
+          "subject": "数学",
+          "seconds": 5221,
+          "startTime": "14:00",
+          "endTime": "15:27",
+          "memo": ""
+        },
+        {
+          "id": 1791976672456,
+          "subject": "国語",
+          "seconds": 5974,
+          "startTime": "12:39",
+          "endTime": "14:18",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-27": {
+      "date": "2026-09-27",
+      "entries": [
+        {
+          "id": 1791975974456,
+          "subject": "国語",
+          "seconds": 5517,
+          "startTime": "16:11",
+          "endTime": "17:42",
+          "memo": ""
+        },
+        {
+          "id": 1791975973456,
+          "subject": "物理",
+          "seconds": 5902,
+          "startTime": "13:10",
+          "endTime": "14:48",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-28": {
+      "date": "2026-09-28",
+      "entries": [
+        {
+          "id": 1791976074456,
+          "subject": "数学",
+          "seconds": 4901,
+          "startTime": "15:38",
+          "endTime": "16:59",
+          "memo": ""
+        },
+        {
+          "id": 1791976073456,
+          "subject": "数学",
+          "seconds": 1562,
+          "startTime": "18:11",
+          "endTime": "18:37",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-18": {
+      "date": "2026-10-18",
+      "entries": [
+        {
+          "id": 1792278281377,
+          "subject": "英語",
+          "seconds": 1048,
+          "startTime": "07:37",
+          "endTime": "08:04",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-16": {
+      "date": "2026-10-16",
+      "entries": [
+        {
+          "id": 1792101608578,
+          "subject": "英語",
+          "seconds": 2176,
+          "startTime": "06:22",
+          "endTime": "07:00",
+          "memo": "",
+          "pausedSeconds": 79
+        },
+        {
+          "id": 1792112422174,
+          "subject": "国語",
+          "seconds": 2356,
+          "startTime": "09:36",
+          "endTime": "10:00",
+          "memo": "",
+          "pausedSeconds": 556
+        },
+        {
+          "id": 1792120459551,
+          "subject": "数学",
+          "seconds": 1800,
+          "startTime": "11:14",
+          "endTime": "11:44",
+          "memo": ""
+        },
+        {
+          "id": 1792144068044,
+          "subject": "英語",
+          "seconds": 3600,
+          "startTime": "17:00",
+          "endTime": "18:00",
+          "memo": ""
+        },
+        {
+          "id": 1792148208433,
+          "subject": "英語",
+          "seconds": 2580,
+          "startTime": "19:10",
+          "endTime": "19:53",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-07": {
+      "date": "2026-10-07",
+      "entries": [
+        {
+          "id": 1791976974456,
+          "subject": "化学",
+          "seconds": 2890,
+          "startTime": "15:51",
+          "endTime": "16:39",
+          "memo": ""
+        },
+        {
+          "id": 1791976973456,
+          "subject": "英語",
+          "seconds": 2271,
+          "startTime": "09:24",
+          "endTime": "10:01",
+          "memo": ""
+        },
+        {
+          "id": 1791976972456,
+          "subject": "数学",
+          "seconds": 5977,
+          "startTime": "19:37",
+          "endTime": "21:16",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-11": {
+      "date": "2026-10-11",
+      "entries": [
+        {
+          "id": 1791977374456,
+          "subject": "国語",
+          "seconds": 4011,
+          "startTime": "16:24",
+          "endTime": "17:30",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-26": {
+      "date": "2026-09-26",
+      "entries": [
+        {
+          "id": 1791975874456,
+          "subject": "英語",
+          "seconds": 6387,
+          "startTime": "16:57",
+          "endTime": "18:43",
+          "memo": ""
+        },
+        {
+          "id": 1791975873456,
+          "subject": "数学",
+          "seconds": 5330,
+          "startTime": "15:34",
+          "endTime": "17:02",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-31": {
+      "date": "2026-10-31",
+      "entries": [
+        {
+          "id": 1793417521866,
+          "subject": "英語",
+          "seconds": 1999,
+          "startTime": "11:18",
+          "endTime": "12:32",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-26": {
+      "date": "2026-10-26",
+      "entries": [
+        {
+          "id": 1792986802661,
+          "subject": "CS",
+          "seconds": 3600,
+          "startTime": "11:53",
+          "endTime": "12:53",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-13": {
+      "date": "2026-10-13",
+      "entries": [
+        {
+          "id": 1791977574455,
+          "subject": "化学",
+          "seconds": 1817,
+          "startTime": "19:42",
+          "endTime": "20:12",
+          "memo": ""
+        },
+        {
+          "id": 1791977573455,
+          "subject": "国語",
+          "seconds": 3719,
+          "startTime": "13:21",
+          "endTime": "14:22",
+          "memo": ""
+        },
+        {
+          "id": 1791977572455,
+          "subject": "英語",
+          "seconds": 1482,
+          "startTime": "19:03",
+          "endTime": "19:27",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-30": {
+      "date": "2026-09-30",
+      "entries": [
+        {
+          "id": 1791976274456,
+          "subject": "化学",
+          "seconds": 2192,
+          "startTime": "15:42",
+          "endTime": "16:18",
+          "memo": ""
+        },
+        {
+          "id": 1791976273456,
+          "subject": "英語",
+          "seconds": 6213,
+          "startTime": "20:56",
+          "endTime": "22:39",
+          "memo": ""
+        },
+        {
+          "id": 1791976272456,
+          "subject": "数学",
+          "seconds": 5907,
+          "startTime": "14:15",
+          "endTime": "15:53",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-29": {
+      "date": "2026-09-29",
+      "entries": [
+        {
+          "id": 1791976174456,
+          "subject": "数学",
+          "seconds": 2138,
+          "startTime": "18:56",
+          "endTime": "19:31",
+          "memo": ""
+        },
+        {
+          "id": 1791976173456,
+          "subject": "物理",
+          "seconds": 6050,
+          "startTime": "18:57",
+          "endTime": "20:37",
+          "memo": ""
+        },
+        {
+          "id": 1791976172456,
+          "subject": "化学",
+          "seconds": 5853,
+          "startTime": "13:14",
+          "endTime": "14:51",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-23": {
+      "date": "2026-09-23",
+      "entries": [
+        {
+          "id": 1791975574456,
+          "subject": "化学",
+          "seconds": 2478,
+          "startTime": "12:31",
+          "endTime": "13:12",
+          "memo": ""
+        },
+        {
+          "id": 1791975573456,
+          "subject": "国語",
+          "seconds": 2206,
+          "startTime": "17:52",
+          "endTime": "18:28",
+          "memo": ""
+        },
+        {
+          "id": 1791975572456,
+          "subject": "英語",
+          "seconds": 2793,
+          "startTime": "15:44",
+          "endTime": "16:30",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-24": {
+      "date": "2026-09-24",
+      "entries": [
+        {
+          "id": 1791975674456,
+          "subject": "国語",
+          "seconds": 2480,
+          "startTime": "18:24",
+          "endTime": "19:05",
+          "memo": ""
+        },
+        {
+          "id": 1791975673456,
+          "subject": "物理",
+          "seconds": 4244,
+          "startTime": "17:06",
+          "endTime": "18:16",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-25": {
+      "date": "2026-09-25",
+      "entries": [
+        {
+          "id": 1791975774456,
+          "subject": "数学",
+          "seconds": 4472,
+          "startTime": "09:02",
+          "endTime": "10:16",
+          "memo": ""
+        },
+        {
+          "id": 1791975773456,
+          "subject": "化学",
+          "seconds": 3154,
+          "startTime": "20:26",
+          "endTime": "21:18",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-23": {
+      "date": "2026-10-23",
+      "entries": [
+        {
+          "id": 1792747636900,
+          "subject": "英語",
+          "seconds": 1021,
+          "startTime": "18:12",
+          "endTime": "18:27",
+          "memo": ""
+        },
+        {
+          "id": 1792763730113,
+          "subject": "CS",
+          "seconds": 5100,
+          "startTime": "21:30",
+          "endTime": "22:55",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-25": {
+      "date": "2026-10-25",
+      "entries": [
+        {
+          "id": 1792908906962,
+          "subject": "CS",
+          "seconds": 3600,
+          "startTime": "10:00",
+          "endTime": "11:00",
+          "memo": "",
+          "pausedSeconds": 0
+        },
+        {
+          "id": 1792938325142,
+          "subject": "英語",
+          "seconds": 1653,
+          "startTime": "22:15",
+          "endTime": "23:25",
+          "memo": "",
+          "pausedSeconds": 423
+        }
+      ]
+    },
+    "log-2026-10-09": {
+      "date": "2026-10-09",
+      "entries": [
+        {
+          "id": 1791977174456,
+          "subject": "英語",
+          "seconds": 4574,
+          "startTime": "13:50",
+          "endTime": "15:06",
+          "memo": ""
+        },
+        {
+          "id": 1791977173456,
+          "subject": "国語",
+          "seconds": 1399,
+          "startTime": "10:47",
+          "endTime": "11:10",
+          "memo": ""
+        },
+        {
+          "id": 1791977172456,
+          "subject": "国語",
+          "seconds": 2759,
+          "startTime": "10:33",
+          "endTime": "11:18",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-11-10": {
+      "date": "2026-11-10",
+      "entries": [
+        {
+          "id": 1794300809754,
+          "subject": "CS",
+          "seconds": 3480,
+          "startTime": "16:41",
+          "endTime": "17:53",
+          "memo": "",
+          "pausedSeconds": 1132
+        },
+        {
+          "id": 1794315617432,
+          "subject": "英語",
+          "seconds": 2531,
+          "startTime": "21:08",
+          "endTime": "22:00",
+          "memo": "",
+          "pausedSeconds": 574
+        },
+        {
+          "id": 1794317609043,
+          "subject": "数学",
+          "seconds": 1619,
+          "startTime": "22:06",
+          "endTime": "22:33",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-01": {
+      "date": "2026-10-01",
+      "entries": [
+        {
+          "id": 1791976374456,
+          "subject": "化学",
+          "seconds": 3866,
+          "startTime": "18:03",
+          "endTime": "19:07",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-08": {
+      "date": "2026-10-08",
+      "entries": [
+        {
+          "id": 1791977074456,
+          "subject": "化学",
+          "seconds": 3230,
+          "startTime": "17:24",
+          "endTime": "18:17",
+          "memo": ""
+        },
+        {
+          "id": 1791977073456,
+          "subject": "数学",
+          "seconds": 3521,
+          "startTime": "20:27",
+          "endTime": "21:25",
+          "memo": ""
+        },
+        {
+          "id": 1791977072456,
+          "subject": "国語",
+          "seconds": 2274,
+          "startTime": "20:48",
+          "endTime": "21:25",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-12": {
+      "date": "2026-10-12",
+      "entries": [
+        {
+          "id": 1791977474456,
+          "subject": "化学",
+          "seconds": 3903,
+          "startTime": "20:26",
+          "endTime": "21:31",
+          "memo": ""
+        },
+        {
+          "id": 1791977473456,
+          "subject": "国語",
+          "seconds": 3227,
+          "startTime": "14:07",
+          "endTime": "15:00",
+          "memo": ""
+        },
+        {
+          "id": 1791977472456,
+          "subject": "英語",
+          "seconds": 1732,
+          "startTime": "13:46",
+          "endTime": "14:14",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-11-12": {
+      "date": "2026-11-12",
+      "entries": [
+        {
+          "id": 1794449029022,
+          "subject": "数学",
+          "seconds": 1141,
+          "startTime": "10:37",
+          "endTime": "11:03",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-06": {
+      "date": "2026-10-06",
+      "entries": [
+        {
+          "id": 1791976874456,
+          "subject": "英語",
+          "seconds": 3935,
+          "startTime": "16:14",
+          "endTime": "17:19",
+          "memo": ""
+        },
+        {
+          "id": 1791976873456,
+          "subject": "化学",
+          "seconds": 4875,
+          "startTime": "12:07",
+          "endTime": "13:28",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-05": {
+      "date": "2026-10-05",
+      "entries": [
+        {
+          "id": 1791976774456,
+          "subject": "国語",
+          "seconds": 5916,
+          "startTime": "17:02",
+          "endTime": "18:40",
+          "memo": ""
+        },
+        {
+          "id": 1791976773456,
+          "subject": "化学",
+          "seconds": 6175,
+          "startTime": "13:25",
+          "endTime": "15:07",
+          "memo": ""
+        },
+        {
+          "id": 1791976772456,
+          "subject": "英語",
+          "seconds": 2363,
+          "startTime": "13:21",
+          "endTime": "14:00",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-21": {
+      "date": "2026-10-21",
+      "entries": [
+        {
+          "id": 1792582434499,
+          "subject": "英語",
+          "seconds": 2766,
+          "startTime": "19:47",
+          "endTime": "20:33",
+          "memo": "",
+          "pausedSeconds": 784
+        }
+      ]
+    },
+    "log-2026-10-22": {
+      "date": "2026-10-22",
+      "entries": [
+        {
+          "id": 1792669621600,
+          "subject": "英語",
+          "seconds": 1807,
+          "startTime": "20:46",
+          "endTime": "20:47",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-10": {
+      "date": "2026-10-10",
+      "entries": [
+        {
+          "id": 1791977274456,
+          "subject": "国語",
+          "seconds": 4412,
+          "startTime": "13:15",
+          "endTime": "14:28",
+          "memo": ""
+        },
+        {
+          "id": 1791977273456,
+          "subject": "化学",
+          "seconds": 2842,
+          "startTime": "16:24",
+          "endTime": "17:11",
+          "memo": ""
+        },
+        {
+          "id": 1791977272456,
+          "subject": "化学",
+          "seconds": 4399,
+          "startTime": "12:59",
+          "endTime": "14:12",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-11-09": {
+      "date": "2026-11-09",
+      "entries": [
+        {
+          "id": 1794214175618,
+          "subject": "資格勉強",
+          "seconds": 1721,
+          "startTime": "17:20",
+          "endTime": "17:49",
+          "memo": "",
+          "pausedSeconds": 35
+        },
+        {
+          "id": 1794215081638,
+          "subject": "国語",
+          "seconds": 613,
+          "startTime": "17:54",
+          "endTime": "18:04",
+          "memo": ""
+        },
+        {
+          "id": 1794229435250,
+          "subject": "CS",
+          "seconds": 1390,
+          "startTime": "22:00",
+          "endTime": "22:03",
+          "memo": ""
+        },
+        {
+          "id": 1794232772874,
+          "subject": "英語",
+          "seconds": 2171,
+          "startTime": "22:12",
+          "endTime": "22:59",
+          "memo": "",
+          "pausedSeconds": 669
+        }
+      ]
+    },
+    "log-2026-11-11": {
+      "date": "2026-11-11",
+      "entries": [
+        {
+          "id": 1794402015097,
+          "subject": "英語",
+          "seconds": 1176,
+          "startTime": "21:40",
+          "endTime": "22:00",
+          "memo": ""
+        },
+        {
+          "id": 1794405633219,
+          "subject": "資格勉強",
+          "seconds": 1533,
+          "startTime": "22:10",
+          "endTime": "23:00",
+          "memo": ""
+        }
+      ]
+    }
+  },
+  "exportedAt": "2026-11-12T07:49:21.097Z"
+}
