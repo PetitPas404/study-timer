@@ -292,6 +292,20 @@
         }
       ]
     },
+    "log-2026-11-14": {
+      "date": "2026-11-14",
+      "entries": [
+        {
+          "id": 1794646983613,
+          "subject": "応用情報",
+          "seconds": 7243,
+          "startTime": "15:28",
+          "endTime": "18:03",
+          "memo": "",
+          "pausedSeconds": 1031
+        }
+      ]
+    },
     "log-2026-10-11": {
       "date": "2026-10-11",
       "entries": [
@@ -349,37 +363,6 @@
           "startTime": "11:53",
           "endTime": "12:53",
           "memo": ""
-        }
-      ]
-    },
-    "log-2026-11-12": {
-      "date": "2026-11-12",
-      "entries": [
-        {
-          "id": 1794449029022,
-          "subject": "数学",
-          "seconds": 1141,
-          "startTime": "10:37",
-          "endTime": "11:03",
-          "memo": ""
-        },
-        {
-          "id": 1794475991880,
-          "subject": "応用情報",
-          "seconds": 3061,
-          "startTime": "17:23",
-          "endTime": "18:33",
-          "memo": "",
-          "pausedSeconds": 688
-        },
-        {
-          "id": 1794491470323,
-          "subject": "英語",
-          "seconds": 1226,
-          "startTime": "22:24",
-          "endTime": "22:51",
-          "memo": "",
-          "pausedSeconds": 298
         }
       ]
     },
@@ -716,6 +699,37 @@
         }
       ]
     },
+    "log-2026-11-12": {
+      "date": "2026-11-12",
+      "entries": [
+        {
+          "id": 1794449029022,
+          "subject": "数学",
+          "seconds": 1141,
+          "startTime": "10:37",
+          "endTime": "11:03",
+          "memo": ""
+        },
+        {
+          "id": 1794475991880,
+          "subject": "応用情報",
+          "seconds": 3061,
+          "startTime": "17:23",
+          "endTime": "18:33",
+          "memo": "",
+          "pausedSeconds": 688
+        },
+        {
+          "id": 1794491470323,
+          "subject": "英語",
+          "seconds": 1226,
+          "startTime": "22:24",
+          "endTime": "22:51",
+          "memo": "",
+          "pausedSeconds": 298
+        }
+      ]
+    },
     "log-2026-10-06": {
       "date": "2026-10-06",
       "entries": [
@@ -844,5 +858,5 @@
       ]
     }
   },
-  "exportedAt": "2026-11-12T14:10:23.571Z"
+  "exportedAt": "2026-11-14T09:03:14.961Z"
 }
