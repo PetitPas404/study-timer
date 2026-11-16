@@ -353,19 +353,6 @@
         }
       ]
     },
-    "log-2026-10-26": {
-      "date": "2026-10-26",
-      "entries": [
-        {
-          "id": 1792986802661,
-          "subject": "CS50x",
-          "seconds": 3600,
-          "startTime": "11:53",
-          "endTime": "12:53",
-          "memo": ""
-        }
-      ]
-    },
     "log-2026-10-13": {
       "date": "2026-10-13",
       "entries": [
@@ -474,71 +461,6 @@
         }
       ]
     },
-    "log-2026-09-25": {
-      "date": "2026-09-25",
-      "entries": [
-        {
-          "id": 1791975774456,
-          "subject": "数学",
-          "seconds": 4472,
-          "startTime": "09:02",
-          "endTime": "10:16",
-          "memo": ""
-        },
-        {
-          "id": 1791975773456,
-          "subject": "化学",
-          "seconds": 3154,
-          "startTime": "20:26",
-          "endTime": "21:18",
-          "memo": ""
-        }
-      ]
-    },
-    "log-2026-10-23": {
-      "date": "2026-10-23",
-      "entries": [
-        {
-          "id": 1792747636900,
-          "subject": "英語",
-          "seconds": 1021,
-          "startTime": "18:12",
-          "endTime": "18:27",
-          "memo": ""
-        },
-        {
-          "id": 1792763730113,
-          "subject": "CS50x",
-          "seconds": 5100,
-          "startTime": "21:30",
-          "endTime": "22:55",
-          "memo": ""
-        }
-      ]
-    },
-    "log-2026-10-25": {
-      "date": "2026-10-25",
-      "entries": [
-        {
-          "id": 1792908906962,
-          "subject": "CS50x",
-          "seconds": 3600,
-          "startTime": "10:00",
-          "endTime": "11:00",
-          "memo": "",
-          "pausedSeconds": 0
-        },
-        {
-          "id": 1792938325142,
-          "subject": "英語",
-          "seconds": 1653,
-          "startTime": "22:15",
-          "endTime": "23:25",
-          "memo": "",
-          "pausedSeconds": 423
-        }
-      ]
-    },
     "log-2026-09-23": {
       "date": "2026-09-23",
       "entries": [
@@ -565,6 +487,63 @@
           "startTime": "15:44",
           "endTime": "16:30",
           "memo": ""
+        }
+      ]
+    },
+    "log-2026-09-25": {
+      "date": "2026-09-25",
+      "entries": [
+        {
+          "id": 1791975774456,
+          "subject": "数学",
+          "seconds": 4472,
+          "startTime": "09:02",
+          "endTime": "10:16",
+          "memo": ""
+        },
+        {
+          "id": 1791975773456,
+          "subject": "化学",
+          "seconds": 3154,
+          "startTime": "20:26",
+          "endTime": "21:18",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-26": {
+      "date": "2026-10-26",
+      "entries": [
+        {
+          "id": 1792986802661,
+          "subject": "CS50x",
+          "seconds": 3600,
+          "startTime": "11:53",
+          "endTime": "12:53",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-25": {
+      "date": "2026-10-25",
+      "entries": [
+        {
+          "id": 1792908906962,
+          "subject": "CS50x",
+          "seconds": 3600,
+          "startTime": "10:00",
+          "endTime": "11:00",
+          "memo": "",
+          "pausedSeconds": 0
+        },
+        {
+          "id": 1792938325142,
+          "subject": "英語",
+          "seconds": 1653,
+          "startTime": "22:15",
+          "endTime": "23:25",
+          "memo": "",
+          "pausedSeconds": 423
         }
       ]
     },
@@ -597,15 +576,23 @@
         }
       ]
     },
-    "log-2026-10-01": {
-      "date": "2026-10-01",
+    "log-2026-10-23": {
+      "date": "2026-10-23",
       "entries": [
         {
-          "id": 1791976374456,
-          "subject": "化学",
-          "seconds": 3866,
-          "startTime": "18:03",
-          "endTime": "19:07",
+          "id": 1792747636900,
+          "subject": "英語",
+          "seconds": 1021,
+          "startTime": "18:12",
+          "endTime": "18:27",
+          "memo": ""
+        },
+        {
+          "id": 1792763730113,
+          "subject": "CS50x",
+          "seconds": 5100,
+          "startTime": "21:30",
+          "endTime": "22:55",
           "memo": ""
         }
       ]
@@ -670,6 +657,19 @@
         }
       ]
     },
+    "log-2026-10-01": {
+      "date": "2026-10-01",
+      "entries": [
+        {
+          "id": 1791976374456,
+          "subject": "化学",
+          "seconds": 3866,
+          "startTime": "18:03",
+          "endTime": "19:07",
+          "memo": ""
+        }
+      ]
+    },
     "log-2026-10-12": {
       "date": "2026-10-12",
       "entries": [
@@ -727,6 +727,20 @@
           "endTime": "22:51",
           "memo": "",
           "pausedSeconds": 298
+        }
+      ]
+    },
+    "log-2026-11-15": {
+      "date": "2026-11-15",
+      "entries": [
+        {
+          "id": 1794711609048,
+          "subject": "英語",
+          "seconds": 989,
+          "startTime": "11:41",
+          "endTime": "12:00",
+          "memo": "",
+          "pausedSeconds": 100
         }
       ]
     },
@@ -858,5 +872,5 @@
       ]
     }
   },
-  "exportedAt": "2026-11-14T09:03:14.961Z"
+  "exportedAt": "2026-11-16T12:04:24.231Z"
 }
