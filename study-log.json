@@ -353,6 +353,48 @@
         }
       ]
     },
+    "log-2026-10-26": {
+      "date": "2026-10-26",
+      "entries": [
+        {
+          "id": 1792986802661,
+          "subject": "CS50x",
+          "seconds": 3600,
+          "startTime": "11:53",
+          "endTime": "12:53",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-13": {
+      "date": "2026-10-13",
+      "entries": [
+        {
+          "id": 1791977574455,
+          "subject": "化学",
+          "seconds": 1817,
+          "startTime": "19:42",
+          "endTime": "20:12",
+          "memo": ""
+        },
+        {
+          "id": 1791977573455,
+          "subject": "国語",
+          "seconds": 3719,
+          "startTime": "13:21",
+          "endTime": "14:22",
+          "memo": ""
+        },
+        {
+          "id": 1791977572455,
+          "subject": "英語",
+          "seconds": 1482,
+          "startTime": "19:03",
+          "endTime": "19:27",
+          "memo": ""
+        }
+      ]
+    },
     "log-2026-09-30": {
       "date": "2026-09-30",
       "entries": [
@@ -407,35 +449,6 @@
           "seconds": 5853,
           "startTime": "13:14",
           "endTime": "14:51",
-          "memo": ""
-        }
-      ]
-    },
-    "log-2026-10-13": {
-      "date": "2026-10-13",
-      "entries": [
-        {
-          "id": 1791977574455,
-          "subject": "化学",
-          "seconds": 1817,
-          "startTime": "19:42",
-          "endTime": "20:12",
-          "memo": ""
-        },
-        {
-          "id": 1791977573455,
-          "subject": "国語",
-          "seconds": 3719,
-          "startTime": "13:21",
-          "endTime": "14:22",
-          "memo": ""
-        },
-        {
-          "id": 1791977572455,
-          "subject": "英語",
-          "seconds": 1482,
-          "startTime": "19:03",
-          "endTime": "19:27",
           "memo": ""
         }
       ]
@@ -511,19 +524,6 @@
         }
       ]
     },
-    "log-2026-10-26": {
-      "date": "2026-10-26",
-      "entries": [
-        {
-          "id": 1792986802661,
-          "subject": "CS50x",
-          "seconds": 3600,
-          "startTime": "11:53",
-          "endTime": "12:53",
-          "memo": ""
-        }
-      ]
-    },
     "log-2026-10-25": {
       "date": "2026-10-25",
       "entries": [
@@ -576,27 +576,6 @@
         }
       ]
     },
-    "log-2026-10-23": {
-      "date": "2026-10-23",
-      "entries": [
-        {
-          "id": 1792747636900,
-          "subject": "英語",
-          "seconds": 1021,
-          "startTime": "18:12",
-          "endTime": "18:27",
-          "memo": ""
-        },
-        {
-          "id": 1792763730113,
-          "subject": "CS50x",
-          "seconds": 5100,
-          "startTime": "21:30",
-          "endTime": "22:55",
-          "memo": ""
-        }
-      ]
-    },
     "log-2026-11-10": {
       "date": "2026-11-10",
       "entries": [
@@ -628,6 +607,40 @@
         }
       ]
     },
+    "log-2026-10-23": {
+      "date": "2026-10-23",
+      "entries": [
+        {
+          "id": 1792747636900,
+          "subject": "英語",
+          "seconds": 1021,
+          "startTime": "18:12",
+          "endTime": "18:27",
+          "memo": ""
+        },
+        {
+          "id": 1792763730113,
+          "subject": "CS50x",
+          "seconds": 5100,
+          "startTime": "21:30",
+          "endTime": "22:55",
+          "memo": ""
+        }
+      ]
+    },
+    "log-2026-10-01": {
+      "date": "2026-10-01",
+      "entries": [
+        {
+          "id": 1791976374456,
+          "subject": "化学",
+          "seconds": 3866,
+          "startTime": "18:03",
+          "endTime": "19:07",
+          "memo": ""
+        }
+      ]
+    },
     "log-2026-10-08": {
       "date": "2026-10-08",
       "entries": [
@@ -653,19 +666,6 @@
           "seconds": 2274,
           "startTime": "20:48",
           "endTime": "21:25",
-          "memo": ""
-        }
-      ]
-    },
-    "log-2026-10-01": {
-      "date": "2026-10-01",
-      "entries": [
-        {
-          "id": 1791976374456,
-          "subject": "化学",
-          "seconds": 3866,
-          "startTime": "18:03",
-          "endTime": "19:07",
           "memo": ""
         }
       ]
@@ -832,6 +832,15 @@
           "endTime": "12:32",
           "memo": "",
           "pausedSeconds": 1078
+        },
+        {
+          "id": 1794906675683,
+          "subject": "応用情報",
+          "seconds": 4658,
+          "startTime": "16:38",
+          "endTime": "18:11",
+          "memo": "",
+          "pausedSeconds": 590
         }
       ]
     },
@@ -899,5 +908,5 @@
       ]
     }
   },
-  "exportedAt": "2026-11-17T07:38:52.516Z"
+  "exportedAt": "2026-11-18T02:39:37.307Z"
 }
