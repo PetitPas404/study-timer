@@ -63,11 +63,14 @@ var Store = {
 };
 
 // === GitHub Auto Sync ===
-// 勉強記録（subjects と log-*）を GitHub リポジトリ内の study-log.json へ自動保存する。
+// 勉強記録を GitHub リポジトリ内の study-log/<日付>.json へ、日ごとに自動保存する。
+// 送るのは変わった日のファイルだけなので、送信量は常に小さい。
+// 旧方式の study-log.json（全日分まとめ）は凍結し、過去分の読み取り専用として残す。
 // トークンはこの端末の localStorage にのみ保存される（ghSyncToken）。
 
 var GitHubSync = {
-  API: 'https://api.github.com/repos/PetitPas404/study-timer/contents/study-log.json',
+  BASE: 'https://api.github.com/repos/PetitPas404/study-timer/contents/',
+  DIR: 'study-log',
   BRANCH: 'master',
   _timer: null,
   _syncing: false,
@@ -81,12 +84,46 @@ var GitHubSync = {
     return !!this.token();
   },
 
-  isDirty: function() {
-    return !!Store.get('ghSyncDirty');
+  todayStr: function() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
   },
 
-  markDirty: function() {
-    Store.set('ghSyncDirty', true);
+  localDates: function() {
+    var dates = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      if (key && key.indexOf('log-') === 0) dates.push(key.slice(4));
+    }
+    return dates.sort();
+  },
+
+  dirtyDates: function() {
+    return Store.get('ghDirtyDates') || [];
+  },
+
+  setDirtyDates: function(dates) {
+    if (dates.length) Store.set('ghDirtyDates', dates);
+    else Store.remove('ghDirtyDates');
+  },
+
+  isDirty: function() {
+    return this.dirtyDates().length > 0;
+  },
+
+  // key が log-<日付> ならその日だけ、subjects などなら全日を対象にする
+  markDirty: function(key) {
+    var dates = this.dirtyDates();
+    var add = function(dt) { if (dates.indexOf(dt) < 0) dates.push(dt); };
+    if (key && key.indexOf('log-') === 0) {
+      add(key.slice(4));
+    } else {
+      this.localDates().forEach(add);
+    }
+    this.setDirtyDates(dates);
+    Store.remove('ghSyncDirty');
     this.updateStatus();
     this.schedule();
   },
@@ -98,21 +135,6 @@ var GitHubSync = {
     this._timer = setTimeout(function() { self.syncNow(); }, 5000);
   },
 
-  collect: function() {
-    var data = {
-      subjects: Store.get('subjects') || [],
-      logs: {},
-      exportedAt: new Date().toISOString()
-    };
-    for (var i = 0; i < localStorage.length; i++) {
-      var key = localStorage.key(i);
-      if (key && key.indexOf('log-') === 0) {
-        data.logs[key] = Store.get(key);
-      }
-    }
-    return data;
-  },
-
   encode: function(text) {
     var bytes = new TextEncoder().encode(text);
     var bin = '';
@@ -120,6 +142,13 @@ var GitHubSync = {
       bin += String.fromCharCode(bytes[i]);
     }
     return btoa(bin);
+  },
+
+  decode: function(b64) {
+    var bin = atob(String(b64).replace(/\s/g, ''));
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
   },
 
   headers: function() {
@@ -130,52 +159,59 @@ var GitHubSync = {
     };
   },
 
-  // リモートファイルの sha（更新に必要な番号）を端末に覚えておく。
-  // 起動時に先読みしておくことで、閉じるときは GET を挟まず PUT 1回で送れる。
-  cachedSha: function() {
-    return Store.get('ghSyncSha') || '';
+  apiFor: function(date) {
+    return this.BASE + this.DIR + '/' + date + '.json';
   },
 
-  setCachedSha: function(sha) {
-    if (sha) Store.set('ghSyncSha', sha);
-    else Store.remove('ghSyncSha');
+  collectDay: function(date) {
+    var logs = {};
+    var v = Store.get('log-' + date);
+    if (v) logs['log-' + date] = v;
+    return {
+      subjects: Store.get('subjects') || [],
+      logs: logs,
+      exportedAt: new Date().toISOString()
+    };
   },
 
-  decode: function(b64) {
-    var bin = atob(String(b64).replace(/\s/g, ''));
-    var bytes = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    return new TextDecoder().decode(bytes);
-  },
-
-  buildBody: function(sha) {
+  buildBody: function(date, sha) {
     var body = {
-      message: 'chore: auto-sync study log',
-      content: this.encode(JSON.stringify(this.collect(), null, 2)),
+      message: 'chore: auto-sync study log ' + date,
+      content: this.encode(JSON.stringify(this.collectDay(date), null, 2)),
       branch: this.BRANCH
     };
     if (sha) body.sha = sha;
     return JSON.stringify(body);
   },
 
-  put: function(sha) {
-    var self = this;
-    return fetch(this.API, {
-      method: 'PUT',
-      headers: this.headers(),
-      body: this.buildBody(sha),
-      keepalive: true
-    }).then(function(res) {
-      if (!res.ok) throw new Error('PUT ' + res.status);
-      return res.json();
-    }).then(function(result) {
-      if (result && result.content && result.content.sha) self.setCachedSha(result.content.sha);
-      return result;
-    });
+  // 日付ごとの sha（更新に必要な番号）を端末に覚えておく。
+  // 起動時に先読みしておくことで、閉じるときは GET を挟まず PUT 1回で送れる。
+  shaMap: function() {
+    return Store.get('ghSyncShaMap') || {};
   },
 
-  getFile: function() {
-    return fetch(this.API + '?ref=' + this.BRANCH, { headers: this.headers() })
+  cachedSha: function(date) {
+    return this.shaMap()[date] || '';
+  },
+
+  setCachedSha: function(date, sha) {
+    var map = this.shaMap();
+    if (sha) map[date] = sha;
+    else delete map[date];
+    Store.set('ghSyncShaMap', map);
+  },
+
+  flushDates: function() {
+    return Store.get('ghFlushDates') || [];
+  },
+
+  setFlushDates: function(dates) {
+    if (dates.length) Store.set('ghFlushDates', dates);
+    else Store.remove('ghFlushDates');
+  },
+
+  getDay: function(date) {
+    return fetch(this.apiFor(date) + '?ref=' + this.BRANCH, { headers: this.headers() })
       .then(function(res) {
         if (res.status === 404) return null;
         if (!res.ok) throw new Error('GET ' + res.status);
@@ -183,22 +219,44 @@ var GitHubSync = {
       });
   },
 
-  // 起動時に sha を先読みしておく
+  putDay: function(date, sha) {
+    var self = this;
+    return fetch(this.apiFor(date), {
+      method: 'PUT',
+      headers: this.headers(),
+      body: this.buildBody(date, sha),
+      keepalive: true
+    }).then(function(res) {
+      if (!res.ok) throw new Error('PUT ' + res.status);
+      return res.json();
+    }).then(function(result) {
+      if (result && result.content && result.content.sha) self.setCachedSha(date, result.content.sha);
+      return result;
+    });
+  },
+
+  // 起動時に、未送信の日と今日の sha を先読みしておく
   primeSha: function() {
     if (!this.enabled()) return;
     var self = this;
-    this.getFile().then(function(file) {
-      if (file && file.sha) self.setCachedSha(file.sha);
-    }).catch(function() {});
+    var targets = {};
+    this.dirtyDates().forEach(function(d) { targets[d] = 1; });
+    targets[this.todayStr()] = 1;
+    Object.keys(targets).forEach(function(date) {
+      if (self.cachedSha(date)) return;
+      self.getDay(date).then(function(file) {
+        if (file && file.sha) self.setCachedSha(date, file.sha);
+      }).catch(function() {});
+    });
   },
 
   // リモートの中身がローカルと（exportedAt を除いて）同じか。
   // 閉じるときの送信が成功していた場合の二重送信を防ぐために使う。
-  remoteMatchesLocal: function(file) {
+  remoteMatchesLocal: function(date, file) {
     if (!file || !file.content) return false;
     try {
       var remote = JSON.parse(this.decode(file.content));
-      var local = this.collect();
+      var local = this.collectDay(date);
       return JSON.stringify(remote.subjects || []) === JSON.stringify(local.subjects || []) &&
         JSON.stringify(remote.logs || {}) === JSON.stringify(local.logs || {});
     } catch (e) {
@@ -206,103 +264,127 @@ var GitHubSync = {
     }
   },
 
-  markSynced: function() {
-    Store.set('ghSyncDirty', false);
-    Store.remove('ghSyncError');
-    Store.remove('ghFlushAttempted');
-    Store.set('ghLastSync', new Date().toISOString());
-    this.updateStatus();
+  syncDate: function(date) {
+    var self = this;
+    var flushed = this.flushDates().indexOf(date) >= 0;
+    var sha = this.cachedSha(date);
+    var attempt;
+    if (sha && !flushed) {
+      // sha を覚えているので GET なしで送る
+      attempt = this.putDay(date, sha);
+    } else {
+      attempt = this.getDay(date).then(function(file) {
+        if (file && file.sha) self.setCachedSha(date, file.sha);
+        // 閉じるときの送信で届いていたら、もう送らない
+        if (flushed && self.remoteMatchesLocal(date, file)) return null;
+        return self.putDay(date, file && file.sha);
+      });
+    }
+    return attempt.catch(function(err) {
+      // sha が古かった場合は取り直して1回だけやり直す
+      if (sha && !flushed && /PUT (409|422)/.test(String(err && err.message))) {
+        self.setCachedSha(date, '');
+        return self.getDay(date).then(function(file) {
+          if (file && file.sha) self.setCachedSha(date, file.sha);
+          return self.putDay(date, file && file.sha);
+        });
+      }
+      throw err;
+    });
   },
 
   syncNow: function() {
     if (!this.enabled() || this._syncing) return;
     var self = this;
+    var dates = this.dirtyDates().slice().sort();
+    if (!dates.length) return;
     this._syncing = true;
     this.updateStatus();
-
-    var finishOk = function() {
-      self._syncing = false;
-      self.markSynced();
-    };
-    var finishErr = function() {
-      self._syncing = false;
-      Store.set('ghSyncError', true);
-      self.updateStatus();
-    };
-
-    var flushed = !!Store.get('ghFlushAttempted');
-    var sha = this.cachedSha();
-    var attempt;
-
-    if (sha && !flushed) {
-      // sha を覚えているので GET なしで送る
-      attempt = this.put(sha);
-    } else {
-      attempt = this.getFile().then(function(file) {
-        if (file && file.sha) self.setCachedSha(file.sha);
-        // 閉じるときの送信で届いていたら、もう送らない
-        if (flushed && self.remoteMatchesLocal(file)) return null;
-        return self.put(file && file.sha);
+    var failed = false;
+    var chain = Promise.resolve();
+    dates.forEach(function(date) {
+      chain = chain.then(function() {
+        return self.syncDate(date).then(function() {
+          self.setDirtyDates(self.dirtyDates().filter(function(d) { return d !== date; }));
+          self.setFlushDates(self.flushDates().filter(function(d) { return d !== date; }));
+        }).catch(function() {
+          failed = true;
+        });
       });
-    }
-
-    attempt.then(function(result) {
-      if (result === null) {
-        self._syncing = false;
-        self.markSynced();
-        return;
+    });
+    chain.then(function() {
+      self._syncing = false;
+      if (failed) {
+        Store.set('ghSyncError', true);
+      } else {
+        Store.remove('ghSyncError');
+        Store.set('ghLastSync', new Date().toISOString());
       }
-      finishOk();
-    }).catch(function(err) {
-      // sha が古かった場合は取り直して1回だけやり直す
-      if (sha && !flushed && /PUT (409|422)/.test(String(err && err.message))) {
-        self.setCachedSha('');
-        self.getFile().then(function(file) {
-          if (file && file.sha) self.setCachedSha(file.sha);
-          return self.put(file && file.sha);
-        }).then(finishOk).catch(finishErr);
-        return;
-      }
-      finishErr();
+      self.updateStatus();
+      // 同期中に新しい変更が入っていたら続けて送る
+      if (!failed && self.isDirty()) self.schedule();
     });
   },
 
   // アプリが閉じられるときの送信。
-  // GET を挟むと間に合わないので、覚えている sha で PUT を1回だけ送る。
+  // GET を挟むと間に合わないので、覚えている sha で日ごとに PUT を1回だけ送る。
   // keepalive 指定で、ページが閉じてもブラウザが送信を最後までやり切る。
   flush: function() {
-    if (!this.enabled() || !this.isDirty() || this._flushing) return;
-    var sha = this.cachedSha();
-    if (!sha) {
-      this.syncNow();
-      return;
-    }
-    var bodyText = this.buildBody(sha);
-    // keepalive で送れる量には上限（約64KB）があるので、大きいときは通常同期に任せる
-    if (bodyText.length > 60000) {
-      this.syncNow();
+    if (!this.enabled() || this._flushing || this._syncing) return;
+    var self = this;
+    var dates = this.dirtyDates().filter(function(d) { return !!self.cachedSha(d); });
+    if (!dates.length) {
+      if (this.isDirty()) this.syncNow();
       return;
     }
     this._flushing = true;
-    Store.set('ghFlushAttempted', true);
-    var self = this;
-    fetch(this.API, {
-      method: 'PUT',
-      headers: this.headers(),
-      body: bodyText,
-      keepalive: true
-    }).then(function(res) {
-      if (!res.ok) throw new Error('PUT ' + res.status);
-      return res.json();
-    }).then(function(result) {
-      self._flushing = false;
-      if (result && result.content && result.content.sha) self.setCachedSha(result.content.sha);
-      self.markSynced();
-    }).catch(function() {
-      self._flushing = false;
-      // ページがまだ生きていれば通常同期で送り直す
-      self.syncNow();
+    // visibilitychange と pagehide の二重発火で同じ日を2回送らないための間隔
+    setTimeout(function() { self._flushing = false; }, 3000);
+    dates.forEach(function(date) {
+      var bodyText = self.buildBody(date, self.cachedSha(date));
+      // keepalive で送れる量には上限（約64KB）があるので、大きいときは通常同期に任せる
+      if (bodyText.length > 60000) {
+        self.syncNow();
+        return;
+      }
+      var fl = self.flushDates();
+      if (fl.indexOf(date) < 0) {
+        fl.push(date);
+        self.setFlushDates(fl);
+      }
+      fetch(self.apiFor(date), {
+        method: 'PUT',
+        headers: self.headers(),
+        body: bodyText,
+        keepalive: true
+      }).then(function(res) {
+        if (!res.ok) throw new Error('PUT ' + res.status);
+        return res.json();
+      }).then(function(result) {
+        if (result && result.content && result.content.sha) self.setCachedSha(date, result.content.sha);
+        self.setDirtyDates(self.dirtyDates().filter(function(d) { return d !== date; }));
+        self.setFlushDates(self.flushDates().filter(function(d) { return d !== date; }));
+        Store.set('ghLastSync', new Date().toISOString());
+        self.updateStatus();
+      }).catch(function() {
+        // ページがまだ生きていれば通常同期で送り直す
+        self.syncNow();
+      });
     });
+  },
+
+  // 日ごと方式への移行（初回だけ）：過去分も含め全日を未送信にして、日ごとファイルを作る
+  migrateIfNeeded: function() {
+    if (Store.get('ghSyncV2')) return;
+    Store.set('ghSyncV2', true);
+    var dates = this.dirtyDates();
+    this.localDates().forEach(function(d) {
+      if (dates.indexOf(d) < 0) dates.push(d);
+    });
+    this.setDirtyDates(dates);
+    Store.remove('ghSyncDirty');
+    Store.remove('ghSyncSha');
+    Store.remove('ghFlushAttempted');
   },
 
   updateStatus: function() {
@@ -336,11 +418,11 @@ var GitHubSync = {
   }
   Store.set = function(key, value) {
     origSet(key, value);
-    if (isDataKey(key)) GitHubSync.markDirty();
+    if (isDataKey(key)) GitHubSync.markDirty(key);
   };
   Store.remove = function(key) {
     origRemove(key);
-    if (isDataKey(key)) GitHubSync.markDirty();
+    if (isDataKey(key)) GitHubSync.markDirty(key);
   };
 })();
 
@@ -552,6 +634,7 @@ StudyTimer.prototype.bindEvents = function() {
     GitHubSync.updateStatus();
   });
   GitHubSync.updateStatus();
+  GitHubSync.migrateIfNeeded();
   GitHubSync.primeSha();
   if (GitHubSync.enabled() && GitHubSync.isDirty()) GitHubSync.schedule();
   document.addEventListener('visibilitychange', function() {
