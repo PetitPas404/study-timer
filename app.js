@@ -71,6 +71,7 @@ var GitHubSync = {
   BRANCH: 'master',
   _timer: null,
   _syncing: false,
+  _flushing: false,
 
   token: function() {
     return Store.get('ghSyncToken') || '';
@@ -129,48 +130,179 @@ var GitHubSync = {
     };
   },
 
+  // リモートファイルの sha（更新に必要な番号）を端末に覚えておく。
+  // 起動時に先読みしておくことで、閉じるときは GET を挟まず PUT 1回で送れる。
+  cachedSha: function() {
+    return Store.get('ghSyncSha') || '';
+  },
+
+  setCachedSha: function(sha) {
+    if (sha) Store.set('ghSyncSha', sha);
+    else Store.remove('ghSyncSha');
+  },
+
+  decode: function(b64) {
+    var bin = atob(String(b64).replace(/\s/g, ''));
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  },
+
+  buildBody: function(sha) {
+    var body = {
+      message: 'chore: auto-sync study log',
+      content: this.encode(JSON.stringify(this.collect(), null, 2)),
+      branch: this.BRANCH
+    };
+    if (sha) body.sha = sha;
+    return JSON.stringify(body);
+  },
+
+  put: function(sha) {
+    var self = this;
+    return fetch(this.API, {
+      method: 'PUT',
+      headers: this.headers(),
+      body: this.buildBody(sha),
+      keepalive: true
+    }).then(function(res) {
+      if (!res.ok) throw new Error('PUT ' + res.status);
+      return res.json();
+    }).then(function(result) {
+      if (result && result.content && result.content.sha) self.setCachedSha(result.content.sha);
+      return result;
+    });
+  },
+
+  getFile: function() {
+    return fetch(this.API + '?ref=' + this.BRANCH, { headers: this.headers() })
+      .then(function(res) {
+        if (res.status === 404) return null;
+        if (!res.ok) throw new Error('GET ' + res.status);
+        return res.json();
+      });
+  },
+
+  // 起動時に sha を先読みしておく
+  primeSha: function() {
+    if (!this.enabled()) return;
+    var self = this;
+    this.getFile().then(function(file) {
+      if (file && file.sha) self.setCachedSha(file.sha);
+    }).catch(function() {});
+  },
+
+  // リモートの中身がローカルと（exportedAt を除いて）同じか。
+  // 閉じるときの送信が成功していた場合の二重送信を防ぐために使う。
+  remoteMatchesLocal: function(file) {
+    if (!file || !file.content) return false;
+    try {
+      var remote = JSON.parse(this.decode(file.content));
+      var local = this.collect();
+      return JSON.stringify(remote.subjects || []) === JSON.stringify(local.subjects || []) &&
+        JSON.stringify(remote.logs || {}) === JSON.stringify(local.logs || {});
+    } catch (e) {
+      return false;
+    }
+  },
+
+  markSynced: function() {
+    Store.set('ghSyncDirty', false);
+    Store.remove('ghSyncError');
+    Store.remove('ghFlushAttempted');
+    Store.set('ghLastSync', new Date().toISOString());
+    this.updateStatus();
+  },
+
   syncNow: function() {
     if (!this.enabled() || this._syncing) return;
     var self = this;
     this._syncing = true;
     this.updateStatus();
 
-    fetch(this.API + '?ref=' + this.BRANCH, { headers: this.headers() })
-      .then(function(res) {
-        if (res.status === 404) return null;
-        if (!res.ok) throw new Error('GET ' + res.status);
-        return res.json();
-      })
-      .then(function(file) {
-        var body = {
-          message: 'chore: auto-sync study log',
-          content: self.encode(JSON.stringify(self.collect(), null, 2)),
-          branch: self.BRANCH
-        };
-        if (file && file.sha) body.sha = file.sha;
-        return fetch(self.API, {
-          method: 'PUT',
-          headers: self.headers(),
-          body: JSON.stringify(body),
-          keepalive: true
-        });
-      })
-      .then(function(res) {
-        if (!res.ok) throw new Error('PUT ' + res.status);
-        return res.json();
-      })
-      .then(function() {
-        Store.set('ghSyncDirty', false);
-        Store.remove('ghSyncError');
-        Store.set('ghLastSync', new Date().toISOString());
-        self._syncing = false;
-        self.updateStatus();
-      })
-      .catch(function() {
-        self._syncing = false;
-        Store.set('ghSyncError', true);
-        self.updateStatus();
+    var finishOk = function() {
+      self._syncing = false;
+      self.markSynced();
+    };
+    var finishErr = function() {
+      self._syncing = false;
+      Store.set('ghSyncError', true);
+      self.updateStatus();
+    };
+
+    var flushed = !!Store.get('ghFlushAttempted');
+    var sha = this.cachedSha();
+    var attempt;
+
+    if (sha && !flushed) {
+      // sha を覚えているので GET なしで送る
+      attempt = this.put(sha);
+    } else {
+      attempt = this.getFile().then(function(file) {
+        if (file && file.sha) self.setCachedSha(file.sha);
+        // 閉じるときの送信で届いていたら、もう送らない
+        if (flushed && self.remoteMatchesLocal(file)) return null;
+        return self.put(file && file.sha);
       });
+    }
+
+    attempt.then(function(result) {
+      if (result === null) {
+        self._syncing = false;
+        self.markSynced();
+        return;
+      }
+      finishOk();
+    }).catch(function(err) {
+      // sha が古かった場合は取り直して1回だけやり直す
+      if (sha && !flushed && /PUT (409|422)/.test(String(err && err.message))) {
+        self.setCachedSha('');
+        self.getFile().then(function(file) {
+          if (file && file.sha) self.setCachedSha(file.sha);
+          return self.put(file && file.sha);
+        }).then(finishOk).catch(finishErr);
+        return;
+      }
+      finishErr();
+    });
+  },
+
+  // アプリが閉じられるときの送信。
+  // GET を挟むと間に合わないので、覚えている sha で PUT を1回だけ送る。
+  // keepalive 指定で、ページが閉じてもブラウザが送信を最後までやり切る。
+  flush: function() {
+    if (!this.enabled() || !this.isDirty() || this._flushing) return;
+    var sha = this.cachedSha();
+    if (!sha) {
+      this.syncNow();
+      return;
+    }
+    var bodyText = this.buildBody(sha);
+    // keepalive で送れる量には上限（約64KB）があるので、大きいときは通常同期に任せる
+    if (bodyText.length > 60000) {
+      this.syncNow();
+      return;
+    }
+    this._flushing = true;
+    Store.set('ghFlushAttempted', true);
+    var self = this;
+    fetch(this.API, {
+      method: 'PUT',
+      headers: this.headers(),
+      body: bodyText,
+      keepalive: true
+    }).then(function(res) {
+      if (!res.ok) throw new Error('PUT ' + res.status);
+      return res.json();
+    }).then(function(result) {
+      self._flushing = false;
+      if (result && result.content && result.content.sha) self.setCachedSha(result.content.sha);
+      self.markSynced();
+    }).catch(function() {
+      self._flushing = false;
+      // ページがまだ生きていれば通常同期で送り直す
+      self.syncNow();
+    });
   },
 
   updateStatus: function() {
@@ -420,11 +552,13 @@ StudyTimer.prototype.bindEvents = function() {
     GitHubSync.updateStatus();
   });
   GitHubSync.updateStatus();
+  GitHubSync.primeSha();
   if (GitHubSync.enabled() && GitHubSync.isDirty()) GitHubSync.schedule();
   document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'hidden' && GitHubSync.enabled() && GitHubSync.isDirty()) {
-      GitHubSync.syncNow();
-    }
+    if (document.visibilityState === 'hidden') GitHubSync.flush();
+  });
+  window.addEventListener('pagehide', function() {
+    GitHubSync.flush();
   });
 
   // Calendar navigation
