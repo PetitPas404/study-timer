@@ -768,6 +768,14 @@
           "endTime": "12:24",
           "memo": "",
           "pausedSeconds": 1144
+        },
+        {
+          "id": 1794977650469,
+          "subject": "英語",
+          "seconds": 884,
+          "startTime": "13:39",
+          "endTime": "13:54",
+          "memo": ""
         }
       ]
     },
@@ -835,6 +843,27 @@
         }
       ]
     },
+    "log-2026-11-11": {
+      "date": "2026-11-11",
+      "entries": [
+        {
+          "id": 1794402015097,
+          "subject": "英語",
+          "seconds": 1176,
+          "startTime": "21:40",
+          "endTime": "22:00",
+          "memo": ""
+        },
+        {
+          "id": 1794405633219,
+          "subject": "FP",
+          "seconds": 1533,
+          "startTime": "22:10",
+          "endTime": "23:00",
+          "memo": ""
+        }
+      ]
+    },
     "log-2026-11-17": {
       "date": "2026-11-17",
       "entries": [
@@ -855,27 +884,6 @@
           "endTime": "18:11",
           "memo": "",
           "pausedSeconds": 590
-        }
-      ]
-    },
-    "log-2026-11-11": {
-      "date": "2026-11-11",
-      "entries": [
-        {
-          "id": 1794402015097,
-          "subject": "英語",
-          "seconds": 1176,
-          "startTime": "21:40",
-          "endTime": "22:00",
-          "memo": ""
-        },
-        {
-          "id": 1794405633219,
-          "subject": "FP",
-          "seconds": 1533,
-          "startTime": "22:10",
-          "endTime": "23:00",
-          "memo": ""
         }
       ]
     },
@@ -922,5 +930,5 @@
       ]
     }
   },
-  "exportedAt": "2026-11-18T03:24:58.832Z"
+  "exportedAt": "2026-11-19T00:37:12.619Z"
 }
