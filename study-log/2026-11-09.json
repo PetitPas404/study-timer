@@ -1,0 +1,52 @@
+{
+  "subjects": [
+    "数学",
+    "英語",
+    "国語",
+    "CS50x",
+    "FP",
+    "応用情報"
+  ],
+  "logs": {
+    "log-2026-11-09": {
+      "date": "2026-11-09",
+      "entries": [
+        {
+          "id": 1794214175618,
+          "subject": "FP",
+          "seconds": 1721,
+          "startTime": "17:20",
+          "endTime": "17:49",
+          "memo": "",
+          "pausedSeconds": 35
+        },
+        {
+          "id": 1794215081638,
+          "subject": "国語",
+          "seconds": 613,
+          "startTime": "17:54",
+          "endTime": "18:04",
+          "memo": ""
+        },
+        {
+          "id": 1794229435250,
+          "subject": "CS50x",
+          "seconds": 1390,
+          "startTime": "22:00",
+          "endTime": "22:03",
+          "memo": ""
+        },
+        {
+          "id": 1794232772874,
+          "subject": "英語",
+          "seconds": 2171,
+          "startTime": "22:12",
+          "endTime": "22:59",
+          "memo": "",
+          "pausedSeconds": 669
+        }
+      ]
+    }
+  },
+  "exportedAt": "2026-11-20T09:50:15.985Z"
+}
