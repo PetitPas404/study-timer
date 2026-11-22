@@ -19,9 +19,17 @@
           "endTime": "17:12",
           "memo": "",
           "pausedSeconds": 356
+        },
+        {
+          "id": 1795260437841,
+          "subject": "CS50x",
+          "seconds": 4906,
+          "startTime": "19:00",
+          "endTime": "20:27",
+          "memo": ""
         }
       ]
     }
   },
-  "exportedAt": "2026-11-21T08:12:41.904Z"
+  "exportedAt": "2026-11-22T07:18:59.161Z"
 }
