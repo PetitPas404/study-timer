@@ -13,14 +13,15 @@
       "entries": [
         {
           "id": 1795338406996,
-          "subject": "CS50x",
+          "subject": "応用情報",
           "seconds": 6168,
           "startTime": "16:18",
           "endTime": "18:06",
-          "memo": ""
+          "memo": "",
+          "pausedSeconds": 312
         }
       ]
     }
   },
-  "exportedAt": "2026-11-22T23:51:43.994Z"
+  "exportedAt": "2026-11-22T23:52:04.919Z"
 }
