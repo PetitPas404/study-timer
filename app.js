@@ -1674,25 +1674,57 @@ StudyTimer.prototype.renderStats = function() {
   var grandTotal = 0;
   var subjectTotals = {};
 
-  barData.forEach(function(bar) {
-    bar.seconds = 0;
-    bar.dateKeys.forEach(function(dateStr) {
-      var log = Store.get('log-' + dateStr);
-      if (log && log.entries) {
-        log.entries.forEach(function(entry) {
-          if (!entry.subject || typeof entry.seconds !== 'number') return;
-          bar.seconds += entry.seconds;
-          grandTotal += entry.seconds;
-          subjectTotals[entry.subject] = (subjectTotals[entry.subject] || 0) + entry.seconds;
-        });
-      }
+  if (period === 'day') {
+    // 1日分：合計と科目別はその日の全記録から、棒は時間帯別に集計する
+    var dayLog = Store.get('log-' + range.dateStr);
+    var hourly = [];
+    for (var hi = 0; hi < 24; hi++) hourly.push(0);
+    if (dayLog && dayLog.entries) {
+      dayLog.entries.forEach(function(entry) {
+        if (!entry.subject || typeof entry.seconds !== 'number') return;
+        grandTotal += entry.seconds;
+        subjectTotals[entry.subject] = (subjectTotals[entry.subject] || 0) + entry.seconds;
+        // 開始・終了時刻がある記録だけ時間帯別の棒に入れる
+        if (!entry.startTime || !entry.endTime) return;
+        var sp = entry.startTime.split(':');
+        var ep = entry.endTime.split(':');
+        if (sp.length < 2 || ep.length < 2) return;
+        var startMin = parseInt(sp[0], 10) * 60 + parseInt(sp[1], 10);
+        var endMin = parseInt(ep[0], 10) * 60 + parseInt(ep[1], 10);
+        if (isNaN(startMin) || isNaN(endMin)) return;
+        if (endMin <= startMin) endMin += 24 * 60;
+        var rangeSec = (endMin - startMin) * 60;
+        if (rangeSec <= 0) return;
+        // 休憩分を除いた実績(entry.seconds)を、時刻の範囲に比例配分する
+        for (var m = startMin; m < endMin; m++) {
+          var hourIdx = Math.floor(m / 60) % 24;
+          hourly[hourIdx] += entry.seconds / rangeSec * 60;
+        }
+      });
+    }
+    barData.forEach(function(bar, idx) { bar.seconds = hourly[idx] || 0; });
+  } else {
+    barData.forEach(function(bar) {
+      bar.seconds = 0;
+      bar.dateKeys.forEach(function(dateStr) {
+        var log = Store.get('log-' + dateStr);
+        if (log && log.entries) {
+          log.entries.forEach(function(entry) {
+            if (!entry.subject || typeof entry.seconds !== 'number') return;
+            bar.seconds += entry.seconds;
+            grandTotal += entry.seconds;
+            subjectTotals[entry.subject] = (subjectTotals[entry.subject] || 0) + entry.seconds;
+          });
+        }
+      });
     });
-  });
+  }
 
   document.getElementById('stats-total-time').textContent = formatTimeShort(grandTotal);
 
   var labels = barData.map(function(b) { return b.label; });
-  var values = barData.map(function(b) { return b.seconds / 3600; });
+  // 日は1時間あたり最大60分なので分単位、それ以外は時間単位で渡す
+  var values = barData.map(function(b) { return period === 'day' ? b.seconds / 60 : b.seconds / 3600; });
   this.drawBarChart(labels, values, period);
 
   var subjectEntries = Object.keys(subjectTotals).map(function(s) {
@@ -1705,7 +1737,20 @@ StudyTimer.prototype.renderStats = function() {
 StudyTimer.prototype.getStatsRange = function(period, offset, today) {
   var result = { label: '', barData: [] };
 
-  if (period === 'week') {
+  if (period === 'day') {
+    var dayDate = DateUtils.parse(DateUtils.addDays(today, offset));
+    var dateStr = DateUtils.format(dayDate);
+    var weekday = ['日', '月', '火', '水', '木', '金', '土'][dayDate.getDay()];
+    result.label = (dayDate.getMonth() + 1) + '/' + dayDate.getDate() + '（' + weekday + '）';
+    result.dateStr = dateStr;
+    for (var h = 0; h < 24; h++) {
+      result.barData.push({
+        label: (h % 3 === 0) ? String(h) : '',
+        dateKeys: [dateStr]
+      });
+    }
+
+  } else if (period === 'week') {
     var weekStart = DateUtils.parse(DateUtils.getWeekStart(today));
     weekStart.setDate(weekStart.getDate() + offset * 7);
     var weekEnd = new Date(weekStart);
@@ -1776,8 +1821,13 @@ StudyTimer.prototype.drawBarChart = function(labels, values, period) {
   var chartH = H - padTop - padBottom;
   var maxVal = 12;
   var ySteps = [0, 3, 6, 9, 12];
+  var yUnit = 'h';
 
-  if (period === 'year') {
+  if (period === 'day') {
+    maxVal = 60;
+    ySteps = [0, 15, 30, 45, 60];
+    yUnit = 'm';
+  } else if (period === 'year') {
     var dataMax = Math.max.apply(null, values.concat([0]));
     if (dataMax <= 50) {
       maxVal = 50;
@@ -1805,7 +1855,7 @@ StudyTimer.prototype.drawBarChart = function(labels, values, period) {
     ctx.moveTo(padLeft, y);
     ctx.lineTo(W - padRight, y);
     ctx.stroke();
-    ctx.fillText(v + 'h', padLeft - 6, y);
+    ctx.fillText(v + yUnit, padLeft - 6, y);
   });
 
   var barCount = labels.length;
